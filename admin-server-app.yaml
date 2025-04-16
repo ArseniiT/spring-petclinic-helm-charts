@@ -1,0 +1,19 @@
+# Déploiement d'une application Helm via ArgoCD pour admin-server
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: admin-server-app  # Nom de l'application dans ArgoCD
+  namespace: argocd        # Namespace où ArgoCD est installé
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/ArseniiT/spring-petclinic-helm-charts.git  # Dépôt Git contenant les charts Helm
+    targetRevision: HEAD         # Dernière version du dépôt (HEAD)
+    path: admin-server           # Dossier Helm chart du microservice
+  destination:
+    server: https://kubernetes.default.svc  # API du cluster Kubernetes
+    namespace: default                      # Namespace cible dans EKS
+  syncPolicy:
+    automated:
+      prune: true      # Supprimer les anciens objets non définis dans le chart
+      selfHeal: true   # Réparer automatiquement les divergences

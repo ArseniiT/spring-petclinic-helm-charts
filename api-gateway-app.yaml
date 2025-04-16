@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: api-gateway-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/ArseniiT/spring-petclinic-helm-charts.git
+    targetRevision: HEAD
+    path: api-gateway
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
