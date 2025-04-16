@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: config-server-app
+  namespace: argocd
+spec:
+  project: default
+
+  # Nom du dépôt Git contenant les Helm Charts
+  source:
+    repoURL: https://github.com/ArseniiT/spring-petclinic-helm-charts.git
+    targetRevision: HEAD
+    path: config-server     # Nom du sous-dossier contenant le chart Helm
+
+  # Emplacement où l'application sera déployée (dans le cluster EKS)
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default      # Namespace cible (peut être personnalisé)
+
+  # Autoriser ArgoCD à créer/modifier les ressources automatiquement
+  syncPolicy:
+    automated:
+      prune: true           # Supprimer les ressources obsolètes
+      selfHeal: true        # Corriger automatiquement les dérives

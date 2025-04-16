@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: discovery-server-app
+  namespace: argocd
+spec:
+  project: default
+
+  # Référentiel Git contenant les Helm Charts
+  source:
+    repoURL: https://github.com/ArseniiT/spring-petclinic-helm-charts.git
+    targetRevision: HEAD
+    path: discovery-server   # Chemin vers le chart Helm du discovery-server
+
+  # Où déployer l'application dans le cluster
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default       # Namespace cible
+
+  # Stratégie de synchronisation automatique
+  syncPolicy:
+    automated:
+      prune: true            # Nettoyer les anciennes ressources
+      selfHeal: true         # Réparer automatiquement si le déploiement diverge
