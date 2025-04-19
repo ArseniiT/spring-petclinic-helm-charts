@@ -49,6 +49,8 @@ spec:
               value: http://discovery-server:8761/eureka
             - name: CONFIG_SERVER_URL
               value: http://config-server:8888/config
+            - name: MANAGEMENT_OTLP_TRACING_ENABLED
+              value: "false"
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
