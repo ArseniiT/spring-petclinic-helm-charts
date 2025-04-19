@@ -45,8 +45,8 @@ spec:
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           env:
-            - name: EUREKA_SERVER_URL
-              value: http://discovery-server:80/eureka
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: http://discovery-server:80/
             - name: CONFIG_SERVER_URL
               value: http://config-server:80/config
           {{- with .Values.livenessProbe }}
