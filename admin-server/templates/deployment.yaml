@@ -45,7 +45,10 @@ spec:
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           env:
-            {{- toYaml .Values.env | nindent 12 }}
+            - name: EUREKA_SERVER_URL
+              value: http://discovery-server-app:80/eureka
+            - name: CONFIG_SERVER_URL
+              value: http://config-server-app:80/config
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
