@@ -46,9 +46,9 @@ spec:
               protocol: TCP
           env:
             - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
-              value: http://discovery-server:80/
+              value: http://discovery-server:8761/eureka
             - name: CONFIG_SERVER_URL
-              value: http://config-server:80/config
+              value: http://config-server:8888/config
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
