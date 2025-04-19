@@ -46,9 +46,9 @@ spec:
               protocol: TCP
           env:
             - name: EUREKA_SERVER_URL
-              value: http://discovery-server-app:80/eureka
+              value: http://discovery-server:80/eureka
             - name: CONFIG_SERVER_URL
-              value: http://config-server-app:80/config
+              value: http://config-server:80/config
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
