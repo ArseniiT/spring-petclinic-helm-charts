@@ -11,6 +11,10 @@ spec:
     repoURL: https://github.com/ArseniiT/spring-petclinic-helm-charts.git
     targetRevision: HEAD
     path: discovery-server   # Chemin vers le chart Helm du discovery-server
+    helm:
+      valueFiles:
+        - values.yaml
+        - values.secret.yaml
 
   # Où déployer l'application dans le cluster
   destination:

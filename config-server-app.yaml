@@ -11,6 +11,10 @@ spec:
     repoURL: https://github.com/ArseniiT/spring-petclinic-helm-charts.git
     targetRevision: HEAD
     path: config-server     # Nom du sous-dossier contenant le chart Helm
+    helm:
+      valueFiles:
+        - values.yaml
+        - values.secret.yaml
 
   # Emplacement où l'application sera déployée (dans le cluster EKS)
   destination:

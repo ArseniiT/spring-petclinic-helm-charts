@@ -10,6 +10,10 @@ spec:
     repoURL: https://github.com/ArseniiT/spring-petclinic-helm-charts.git  # Dépôt Git contenant les charts Helm
     targetRevision: HEAD         # Dernière version du dépôt (HEAD)
     path: admin-server           # Dossier Helm chart du microservice
+    helm:
+      valueFiles:
+        - values.yaml
+        - values.secret.yaml
   destination:
     server: https://kubernetes.default.svc  # API du cluster Kubernetes
     namespace: default                      # Namespace cible dans EKS
