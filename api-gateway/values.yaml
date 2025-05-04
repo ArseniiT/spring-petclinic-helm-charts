@@ -64,9 +64,9 @@ ingress:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
-    alb.ingress.kubernetes.io/certificate-arn: <TO_BE_FILLED>
+    alb.ingress.kubernetes.io/certificate-arn: "{{ .Values.global.certificateArn }}"
   hosts:
-    - host: <TO_BE_FILLED>
+    - host: "{{ .Values.global.domainName }}"
       paths:
         - path: /*
           pathType: ImplementationSpecific
