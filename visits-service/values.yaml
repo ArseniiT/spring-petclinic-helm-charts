@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: {{ .Values.global.ecrRepository }}
+  repository: "<TO_BE_FILLED>"
   pullPolicy: IfNotPresent
   tag: "latest"
 
