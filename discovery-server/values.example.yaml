@@ -1,0 +1,4 @@
+global:
+  ecrRepository: "<TO_BE_FILLED>"
+  certificateArn: "<TO_BE_FILLED>"
+  domainName: "<TO_BE_FILLED>"
