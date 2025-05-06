@@ -1,8 +1,4 @@
 {{- if .Values.ingress.enabled }}
-{{- $secret := lookup "v1" "Secret" "default" "dockerhub-credentials" }}
-{{- if $secret }}
-{{- $domain := (index $secret.data "domainName" | b64dec) }}
-{{- $certificateArn := (index $secret.data "certificateArn" | b64dec) }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -13,11 +9,11 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}, {"HTTPS":443}]'
-    alb.ingress.kubernetes.io/certificate-arn: {{ $certificateArn }}
+    alb.ingress.kubernetes.io/certificate-arn: {{ .Values.ingress.annotations.alb_certificate_arn }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}
   rules:
-    - host: {{ $domain }}
+    - host: {{ .Values.ingress.domain }}
       http:
         paths:
           - path: /*
@@ -27,7 +23,4 @@ spec:
                 name: {{ include "api-gateway.fullname" . }}
                 port:
                   number: {{ .Values.service.port }}
-{{- else }}
-{{- fail "Le secret 'dockerhub-credentials' est introuvable." }}
-{{- end }}
 {{- end }}

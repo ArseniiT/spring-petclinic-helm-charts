@@ -1,6 +1,3 @@
-{{- $secret := lookup "v1" "Secret" "default" "dockerhub-credentials" }}
-{{- if $secret }}
-{{- $repository := (index $secret.data "ecrRepository" | b64dec) }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -20,13 +17,10 @@ spec:
       serviceAccountName: {{ include "api-gateway.serviceAccountName" . }}
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ $repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
           env:
             {{- toYaml .Values.env | nindent 12 }}
-{{- else }}
-{{- fail "Le secret 'dockerhub-credentials' est introuvable." }}
-{{- end }}
