@@ -1,10 +1,9 @@
 # templates/deployment.yaml
-# on retire les secrets de k8s secret qui a été créé a partir de AWS SecretManager
-{{- $secret := (lookup "v1" "Secret" "default" "dockerhub-credentials") }}
-{{- $certificateArn := (index $secret.data "certificateArn" | b64dec) }}
-{{- $domainName := (index $secret.data "test_domain" | b64dec) }}
+# on récupère les secrets depuis le Secret Kubernetes généré à partir d'AWS Secrets Manager
+{{- $secret := lookup "v1" "Secret" "default" "dockerhub-credentials" }}
+{{- if $secret }}
 {{- $repository := (index $secret.data "ecrRepository" | b64dec) }}
-  
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -77,3 +76,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+
+{{- else }}
+{{- fail "Le secret 'dockerhub-credentials' est introuvable dans le namespace 'default'. Vérifiez sa création via External Secrets." }}
+{{- end }}

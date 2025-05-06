@@ -1,6 +1,8 @@
-{{- if .Values.ingress.enabled -}}
-{{- $secret := (lookup "v1" "Secret" "default" "dockerhub-credentials") }}
+{{- if .Values.ingress.enabled }}
+{{- $secret := lookup "v1" "Secret" "default" "dockerhub-credentials" }}
+{{- if $secret }}
 {{- $domain := (index $secret.data "domainName" | b64dec) }}
+
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -22,4 +24,8 @@ spec:
                 name: {{ include "api-gateway.fullname" . }}
                 port:
                   number: {{ .Values.service.port }}
+
+{{- else }}
+{{- fail "Le champ 'domainName' est manquant dans le secret 'dockerhub-credentials'. Assurez-vous qu’il a été bien mis à jour dans AWS Secrets Manager." }}
+{{- end }}
 {{- end }}
