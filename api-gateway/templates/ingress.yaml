@@ -2,7 +2,7 @@
 {{- $secret := lookup "v1" "Secret" "default" "dockerhub-credentials" }}
 {{- if $secret }}
 {{- $domain := (index $secret.data "domainName" | b64dec) }}
-
+{{- $certificateArn := (index $secret.data "certificateArn" | b64dec) }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -10,11 +10,14 @@ metadata:
   labels:
     {{- include "api-gateway.labels" . | nindent 4 }}
   annotations:
-    {{- toYaml .Values.ingress.annotations | nindent 4 }}
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}, {"HTTPS":443}]'
+    alb.ingress.kubernetes.io/certificate-arn: {{ $certificateArn }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}
   rules:
-    - host: {{ $domain | quote }}
+    - host: {{ $domain }}
       http:
         paths:
           - path: /*
@@ -24,8 +27,7 @@ spec:
                 name: {{ include "api-gateway.fullname" . }}
                 port:
                   number: {{ .Values.service.port }}
-
 {{- else }}
-{{- fail "Le champ 'domainName' est manquant dans le secret 'dockerhub-credentials'. Assurez-vous qu’il a été bien mis à jour dans AWS Secrets Manager." }}
+{{- fail "Le secret 'dockerhub-credentials' est introuvable." }}
 {{- end }}
 {{- end }}
