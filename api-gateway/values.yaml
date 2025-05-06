@@ -31,8 +31,11 @@ ingress:
   enabled: true
   className: alb
   annotations:
-    alb_certificate_arn: ""
-  domain: ""              
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/certificate-arn: ""
+  domain: "temp.example.com"              
 
 resources: {}
 
