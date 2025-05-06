@@ -32,7 +32,7 @@ ingress:
   className: alb
   annotations:
     alb_certificate_arn: ""
-  domain: ""              
+  domain: "temp.domain.com"              
 
 resources: {}
 
