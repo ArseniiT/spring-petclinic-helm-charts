@@ -1,9 +1,10 @@
 # templates/deployment.yaml
+# on retire les secrets de k8s secret qui a été créé a partir de AWS SecretManager
 {{- $secret := (lookup "v1" "Secret" "default" "dockerhub-credentials") }}
-{{- $_ := set .Values.global "certificateArn" (index $secret.data "certificateArn" | b64dec) }}
-{{- $_ := set .Values.global "domainName" (index $secret.data "test_domain" | b64dec) }}
-{{- $_ := set .Values.image "repository" (index $secret.data "ecrRepository" | b64dec) }}
-
+{{- $certificateArn := (index $secret.data "certificateArn" | b64dec) }}
+{{- $domainName := (index $secret.data "test_domain" | b64dec) }}
+{{- $repository := (index $secret.data "ecrRepository" | b64dec) }}
+  
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -36,7 +37,7 @@ spec:
       serviceAccountName: {{ include "api-gateway.serviceAccountName" . }}
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ $repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             {{- toYaml .Values.env | nindent 12 }}
