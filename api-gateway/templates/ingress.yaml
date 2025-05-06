@@ -9,11 +9,11 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}, {"HTTPS":443}]'
-    alb.ingress.kubernetes.io/certificate-arn: {{ index .Values.ingress.annotations "alb.ingress.kubernetes.io/certificate-arn" | quote }}
+    alb.ingress.kubernetes.io/certificate-arn: {{ .Values.global.certificateArn | quote }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}
   rules:
-    - host: {{ .Values.ingress.domain }}
+    - host: {{ .Values.global.domainName }}
       http:
         paths:
           - path: /*
