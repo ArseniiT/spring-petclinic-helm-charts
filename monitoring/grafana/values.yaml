@@ -1,0 +1,16 @@
+fullnameOverride: grafana
+
+adminUser: admin
+adminPassword: admin
+
+service:
+  type: ClusterIP
+
+ingress:
+  enabled: false
+
+persistence:
+  enabled: false
+
+dashboards:
+  enabled: true

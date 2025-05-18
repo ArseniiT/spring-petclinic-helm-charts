@@ -1,0 +1,19 @@
+fullnameOverride: prometheus
+
+alertmanager:
+  enabled: false
+
+kubeStateMetrics:
+  enabled: false
+
+nodeExporter:
+  enabled: false
+
+pushgateway:
+  enabled: false
+
+server:
+  service:
+    type: ClusterIP
+  ingress:
+    enabled: false
