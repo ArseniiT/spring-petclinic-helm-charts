@@ -1,17 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prometheus
+  name: prometheus-crds
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: git@github.com:ArseniiT/spring-petclinic-helm-charts.git
     targetRevision: main
-    path: monitoring/prometheus
-    helm:
-      valueFiles:
-        - values.yaml
+    path: monitoring/crds
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
