@@ -6,11 +6,14 @@ metadata:
     app: {{ include "admin-server.name" . }}
     release: monitoring
 spec:
+  namespaceSelector:
+    matchNames:
+      - default
   selector:
     matchLabels:
       app: {{ include "admin-server.name" . }}
   endpoints:
-  - port: http
-    path: /actuator/prometheus
-    interval: 15s
-    scrapeTimeout: 10s
+    - port: http
+      path: /actuator/prometheus
+      interval: 15s
+      scrapeTimeout: 10s
