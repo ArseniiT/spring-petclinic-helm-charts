@@ -147,3 +147,12 @@ env:
     value: /actuator
   - name: SPRING_BOOT_ADMIN_DISCOVERY_CONVERTER_MANAGEMENT-CONTEXT-PATH
     value: /actuator
+
+serviceMonitor:
+  enabled: true
+  path: /actuator/prometheus
+  port: http
+  interval: 15s
+  scrapeTimeout: 10s
+  additionalLabels:
+    release: monitoring
