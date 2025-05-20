@@ -1,2 +1,4 @@
-# Helm
-values.secret.yaml
+# ignore secrets
+**/values.secret.yaml
+**/values_with_secrets.yaml
+**/merged-values.yaml
