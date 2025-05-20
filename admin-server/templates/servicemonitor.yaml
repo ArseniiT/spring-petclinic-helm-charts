@@ -4,7 +4,7 @@ metadata:
   name: {{ include "admin-server.fullname" . }}
   labels:
     app: {{ include "admin-server.name" . }}
-    release: monitoring
+    release: prometheus
 spec:
   namespaceSelector:
     matchNames:
