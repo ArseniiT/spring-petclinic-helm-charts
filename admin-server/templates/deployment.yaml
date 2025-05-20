@@ -13,10 +13,11 @@ spec:
       {{- include "admin-server.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
+        restartAt: {{ now | quote }}
+        {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- end }}
       labels:
         {{- include "admin-server.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
