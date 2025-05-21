@@ -22,7 +22,7 @@ spec:
     namespace: default       # Namespace cible
 
   # Stratégie de synchronisation automatique
-  syncPolicy:
-    automated:
-      prune: true            # Nettoyer les anciennes ressources
-      selfHeal: true         # Réparer automatiquement si le déploiement diverge
+  syncPolicy: {}
+    # automated:
+    #   prune: true            # Nettoyer les anciennes ressources
+    #   selfHeal: true         # Réparer automatiquement si le déploiement diverge
