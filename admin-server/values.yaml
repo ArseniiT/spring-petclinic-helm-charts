@@ -144,6 +144,9 @@ env:
     value: /actuator
   - name: SPRING_BOOT_ADMIN_DISCOVERY_CONVERTER_MANAGEMENT-CONTEXT-PATH
     value: /actuator
+  - name: SPRING_DATASOURCE_URL
+    value: jdbc:h2:mem:testdb
+
 
 serviceMonitor:
   enabled: true
