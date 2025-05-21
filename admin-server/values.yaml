@@ -138,7 +138,6 @@ env:
     value: http://admin-server:9090
   - name: SPRING_BOOT_ADMIN_INSTANCE_METADATA-KEYS
     value: management.port,management.context-path
-    env:
   - name: EUREKA_CLIENT_ENABLED
     value: "false"
   - name: SPRING_CLOUD_CONFIG_ENABLED
