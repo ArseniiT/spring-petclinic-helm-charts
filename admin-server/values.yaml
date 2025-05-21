@@ -124,6 +124,10 @@ tolerations: []
 affinity: {}
 
 env:
+  - name: SPRING_CLOUD_CONFIG_ENABLED
+    value: "false"
+  - name: EUREKA_CLIENT_ENABLED
+    value: "false"
   - name: CONFIG_SERVER_URL
     value: http://config-server:8888/config
   - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
@@ -138,18 +142,9 @@ env:
     value: http://admin-server:9090
   - name: SPRING_BOOT_ADMIN_INSTANCE_METADATA-KEYS
     value: management.port,management.context-path
-  - name: EUREKA_CLIENT_ENABLED
-    value: "false"
-  - name: SPRING_CLOUD_CONFIG_ENABLED
-    value: "false"
-  # - name: MANAGEMENT_SERVER_PORT
-  #   value: "9090"
-  # - name: MANAGEMENT_ENDPOINTS_WEB_BASE-PATH
-  #   value: /actuator
-  # - name: SPRING_BOOT_ADMIN_DISCOVERY_CONVERTER_MANAGEMENT-CONTEXT-PATH
-  #   value: /actuator
   - name: SPRING_DATASOURCE_URL
     value: jdbc:h2:mem:testdb
+
 
 
 serviceMonitor:
