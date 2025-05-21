@@ -138,10 +138,10 @@ env:
     value: http://admin-server:9090
   - name: SPRING_BOOT_ADMIN_INSTANCE_METADATA-KEYS
     value: management.port,management.context-path
-  - name: MANAGEMENT_SERVER_PORT
-    value: "9090"
-  - name: MANAGEMENT_ENDPOINTS_WEB_BASE-PATH
-    value: /actuator
+  # - name: MANAGEMENT_SERVER_PORT
+  #   value: "9090"
+  # - name: MANAGEMENT_ENDPOINTS_WEB_BASE-PATH
+  #   value: /actuator
   - name: SPRING_BOOT_ADMIN_DISCOVERY_CONVERTER_MANAGEMENT-CONTEXT-PATH
     value: /actuator
   - name: SPRING_DATASOURCE_URL
