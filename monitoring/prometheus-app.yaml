@@ -18,6 +18,11 @@ spec:
         pushgateway.enabled: false
         grafana.enabled: false
         prometheus:
+          prometheusSpec:
+            serviceMonitorSelector: {}
+            podMonitorSelector: {}
+            ruleSelector: {}
+            retention: 10d
           service:
             type: ClusterIP
   destination:
