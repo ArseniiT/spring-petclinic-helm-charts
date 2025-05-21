@@ -55,6 +55,7 @@ service:
   type: ClusterIP
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
   port: 8888
+  targetPort: 8888
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
@@ -121,3 +122,12 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+serviceMonitor:
+  enabled: true
+  path: /actuator/prometheus
+  port: http
+  interval: 15s
+  scrapeTimeout: 10s
+  additionalLabels:
+    release: monitoring
