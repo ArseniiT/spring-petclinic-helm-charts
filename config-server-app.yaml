@@ -14,15 +14,9 @@ spec:
     helm:
       valueFiles:
         - values.yaml
-        # - values.secret.yaml
 
   # Emplacement où l'application sera déployée (dans le cluster EKS)
   destination:
     server: https://kubernetes.default.svc
     namespace: default      # Namespace cible (peut être personnalisé)
 
-  # Autoriser ArgoCD à créer/modifier les ressources automatiquement
-  syncPolicy:
-    automated:
-      prune: true           # Supprimer les ressources obsolètes
-      selfHeal: true        # Corriger automatiquement les dérives
