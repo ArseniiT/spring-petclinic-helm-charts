@@ -12,7 +12,7 @@ spec:
     helm:
       valueFiles:
         - values.yaml
-    destination:
+  destination:
     server: https://kubernetes.default.svc
     namespace: default
   syncPolicy:
