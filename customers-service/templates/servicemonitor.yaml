@@ -3,7 +3,7 @@ kind: ServiceMonitor
 metadata:
   name: {{ include "customers-service.fullname" . }}
   labels:
-    release: monitoring
+    release: prometheus
 spec:
   selector:
     matchLabels:
