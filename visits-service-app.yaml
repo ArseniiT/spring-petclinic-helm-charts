@@ -12,11 +12,10 @@ spec:
     helm:
       valueFiles:
         - values.yaml
-        - values.secret.yaml
-  destination:
+    destination:
     server: https://kubernetes.default.svc
     namespace: default
   syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+    # automated:
+    #   prune: true
+    #   selfHeal: true
