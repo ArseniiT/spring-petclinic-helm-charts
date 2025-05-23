@@ -19,9 +19,13 @@ server:
     enabled: false
 
 prometheus:
-  service:
-    enabled: true
-    type: ClusterIP
-    port: 9090
-    portName: web
+  enabled: true
+  prometheusSpec:
+    serviceMonitorSelector:
+      matchLabels:
+        release: prometheus
+    resources:
+      requests:
+        memory: 400Mi
+
 
