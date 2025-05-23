@@ -6,12 +6,12 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/ArseniiT/spring-petclinic-helm-charts.git
-    targetRevision: HEAD
-    path: monitoring/prometheus
+    repoURL: https://prometheus-community.github.io/helm-charts
+    chart: kube-prometheus-stack
+    targetRevision: 56.6.0
     helm:
       valueFiles:
-        - values.yaml
+        - https://raw.githubusercontent.com/ArseniiT/spring-petclinic-helm-charts/HEAD/monitoring/prometheus/values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
