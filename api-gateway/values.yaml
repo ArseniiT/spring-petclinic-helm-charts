@@ -27,6 +27,8 @@ service:
   port: 8080
   targetPort: 8080
   type: ClusterIP
+  labels:
+    release: prometheus
 
 ingress:
   enabled: true
@@ -74,3 +76,12 @@ env:
     value: "false"
   - name: EUREKA_INSTANCE_HOSTNAME
     value: api-gateway
+
+serviceMonitor:
+  enabled: true
+  path: /actuator/prometheus
+  port: http
+  interval: 15s
+  scrapeTimeout: 10s
+  additionalLabels:
+    release: prometheus

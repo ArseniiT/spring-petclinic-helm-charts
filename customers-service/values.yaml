@@ -56,6 +56,8 @@ service:
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
   port: 8081
   targetPort: 8081
+  labels:
+    release: prometheus
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
@@ -144,3 +146,12 @@ env:
     value: "true"
   - name: SERVER_PORT
     value: "8081"
+
+serviceMonitor:
+  enabled: true
+  path: /actuator/prometheus
+  port: http
+  interval: 15s
+  scrapeTimeout: 10s
+  additionalLabels:
+    release: prometheus

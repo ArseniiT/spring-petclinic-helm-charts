@@ -25,6 +25,8 @@ service:
   type: ClusterIP
   port: 8082
   targetPort: 8082
+  labels:
+    release: prometheus
 
 ingress:
   enabled: false
@@ -70,3 +72,12 @@ env:
     value: http://admin-server:9090
   - name: SPRING_PROFILES_ACTIVE
     value: docker
+
+serviceMonitor:
+  enabled: true
+  path: /actuator/prometheus
+  port: http
+  interval: 15s
+  scrapeTimeout: 10s
+  additionalLabels:
+    release: prometheus
