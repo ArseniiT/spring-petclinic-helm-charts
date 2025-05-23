@@ -159,4 +159,4 @@ serviceMonitor:
   interval: 15s
   scrapeTimeout: 10s
   additionalLabels:
-    release: monitoring
+    release: prometheus
