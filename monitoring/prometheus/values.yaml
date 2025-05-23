@@ -17,3 +17,7 @@ server:
     type: ClusterIP
   ingress:
     enabled: false
+
+prometheus:
+  service:
+    portName: web
