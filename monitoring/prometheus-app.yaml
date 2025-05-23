@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/ArseniiT/spring-microservices.git
+    repoURL: https://github.com/ArseniiT/spring-petclinic-helm-charts.git
     targetRevision: HEAD
     path: monitoring/prometheus
     helm:
