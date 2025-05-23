@@ -144,6 +144,8 @@ env:
     value: management.port,management.context-path
   - name: SPRING_DATASOURCE_URL
     value: jdbc:h2:mem:testdb
+  # - name: SPRING_CONFIG_IMPORT
+  #   value: ""
 
 
 
