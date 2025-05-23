@@ -17,6 +17,6 @@ spec:
     server: https://kubernetes.default.svc  # API du cluster Kubernetes
     namespace: default                      # Namespace cible dans EKS
   syncPolicy:
-    automated:
-      prune: true      # Supprimer les anciens objets non définis dans le chart
-      selfHeal: true   # Réparer automatiquement les divergences
+    # automated:
+    #   prune: true      # Supprimer les anciens objets non définis dans le chart
+    #   selfHeal: true   # Réparer automatiquement les divergences
