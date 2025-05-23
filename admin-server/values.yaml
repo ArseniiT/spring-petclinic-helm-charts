@@ -54,7 +54,7 @@ service:
   # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
   type: ClusterIP
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
-  port: 9090
+  port: 9091
   labels:
     release: prometheus
 
@@ -147,6 +147,8 @@ env:
     value: management.port,management.context-path
   - name: SPRING_DATASOURCE_URL
     value: jdbc:h2:mem:testdb
+  - name: SERVER_PORT
+    value: "9091"
   # - name: SPRING_CONFIG_IMPORT
   #   value: ""
 
