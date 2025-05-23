@@ -6,12 +6,13 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://prometheus-community.github.io/helm-charts
+    repoURL: https://github.com/ArseniiT/spring-microservices.git
     chart: kube-prometheus-stack
-    targetRevision: 56.6.0
+    targetRevision: HEAD
+    path: monitoring/prometheus
     helm:
       valueFiles:
-        - monitoring/prometheus/values.yaml
+        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
