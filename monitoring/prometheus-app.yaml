@@ -10,21 +10,8 @@ spec:
     chart: kube-prometheus-stack
     targetRevision: 56.6.0
     helm:
-      values: |
-        fullnameOverride: prometheus
-        alertmanager.enabled: false
-        kubeStateMetrics.enabled: false
-        nodeExporter.enabled: false
-        pushgateway.enabled: false
-        grafana.enabled: false
-        prometheus:
-          prometheusSpec:
-            serviceMonitorSelector: {}
-            podMonitorSelector: {}
-            ruleSelector: {}
-            retention: 10d
-          service:
-            type: ClusterIP
+      valueFiles:
+        - monitoring/prometheus/values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
