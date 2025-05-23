@@ -7,7 +7,6 @@ spec:
   project: default
   source:
     repoURL: https://github.com/ArseniiT/spring-microservices.git
-    chart: kube-prometheus-stack
     targetRevision: HEAD
     path: monitoring/prometheus
     helm:
