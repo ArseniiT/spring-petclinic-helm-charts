@@ -3,7 +3,7 @@ kind: ServiceMonitor
 metadata:
   name: {{ include "admin-server.fullname" . }}
   labels:
-    app: {{ include "admin-server.name" . }}
+    app.kubernetes.io/name: {{ include "admin-server.name" . }}
     release: prometheus
 spec:
   namespaceSelector:
@@ -11,7 +11,7 @@ spec:
       - default
   selector:
     matchLabels:
-      app: {{ include "admin-server.name" . }}
+      app.kubernetes.io/name: {{ include "admin-server.name" . }}
   endpoints:
     - port: http
       path: /actuator/prometheus
