@@ -2,7 +2,7 @@
 
 # === Script pour appliquer tous les fichiers Application ArgoCD ===
 
-CHARTS_PATH="$HOME/stage/spring-petclinic-helm-charts"
+CHARTS_PATH="$(dirname "$0")/.."
 
 echo "Déploiement des applications ArgoCD depuis : $CHARTS_PATH"
 
