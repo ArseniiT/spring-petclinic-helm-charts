@@ -79,3 +79,8 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+
+
+ports:
+  - containerPort: 9091
+    name: http
