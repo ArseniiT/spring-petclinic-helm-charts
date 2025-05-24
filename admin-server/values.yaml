@@ -130,27 +130,9 @@ env:
     value: "false"
   - name: EUREKA_CLIENT_ENABLED
     value: "false"
-  - name: CONFIG_SERVER_URL
-    value: http://config-server:8888/
-    # value: http://config-server:8888/config/
-  - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
-    value: http://discovery-server:8761/eureka
-  # - name: SPRING_BOOT_ADMIN_CLIENT_URL
-  #   value: http://admin-server:9091
-  - name: SPRING_BOOT_ADMIN_DISCOVERY_ENABLED
-    value: "true"
-  - name: SPRING_BOOT_ADMIN_CLIENT_PREFER_IP
-    value: "false"
-  # - name: SPRING_BOOT_ADMIN_CLIENT_SERVICE-URL
-  #   value: http://admin-server:9091
-  - name: SPRING_BOOT_ADMIN_INSTANCE_METADATA-KEYS
-    value: management.port,management.context-path
-  - name: SPRING_DATASOURCE_URL
-    value: jdbc:h2:mem:testdb
   - name: SERVER_PORT
     value: "9091"
-  # - name: SPRING_CONFIG_IMPORT
-  #   value: ""
+
 
 
 
