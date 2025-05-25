@@ -43,7 +43,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: 9091
               protocol: TCP
           env:
             {{- toYaml .Values.env | nindent 12 }}
@@ -79,8 +79,3 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-
-
-ports:
-  - containerPort: 9091
-    name: http
