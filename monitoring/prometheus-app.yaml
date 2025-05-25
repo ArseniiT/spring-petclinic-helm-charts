@@ -12,12 +12,6 @@ spec:
     helm:
       valueFiles:
         - monitoring/prometheus/values.yaml
-      # values: |
-      #   prometheus:
-      #     prometheusSpec:
-      #       serviceMonitorSelectorNilUsesHelmValues: false
-      #   grafana:
-      #     enabled: true
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
