@@ -4,6 +4,7 @@ metadata:
   name: {{ include "admin-server.fullname" . }}
   labels:
     {{- include "admin-server.labels" . | nindent 4 }}
+    release: prometheus
 spec:
   type: {{ .Values.service.type }}
   ports:

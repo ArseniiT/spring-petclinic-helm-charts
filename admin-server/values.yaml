@@ -1,35 +1,23 @@
-# Valeurs par défaut pour admin-server
-# Fichier YAML formaté pour déclarer les variables passées aux templates
-
-# Nombre de répliques pour le ReplicaSet
 replicaCount: 1
 
-# Configuration de l'image de conteneur
 image:
   repository: "<TO_BE_FILLED>"
   pullPolicy: IfNotPresent
   tag: "latest"
 
-# Secrets pour extraire l'image d'un dépôt privé
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: "admin-server"
 
-# Configuration du compte de service
 serviceAccount:
   create: true
   automount: true
   annotations: {}
   name: ""
 
-# Annotations et labels du pod
 podAnnotations: {}
 podLabels: {}
 
-podSecurityContext: {}
-securityContext: {}
-
-# Configuration du service Kubernetes
 service:
   type: ClusterIP
   port: 9091
@@ -37,19 +25,9 @@ service:
   labels:
     release: prometheus
 
-# Configuration de l'Ingress
 ingress:
   enabled: false
-  className: ""
-  annotations: {}
-  hosts:
-    - host: chart-example.local
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls: []
 
-# Limites de ressources
 resources:
   requests:
     cpu: 50m
@@ -58,55 +36,48 @@ resources:
     cpu: 200m
     memory: 256Mi
 
-# Configuration des sondes de santé
+# Configuration des sondes - utilisent le bon port
 livenessProbe:
   httpGet:
     path: /actuator/health
     port: 9091
-  initialDelaySeconds: 30
-  periodSeconds: 10
-  timeoutSeconds: 5
+  initialDelaySeconds: 60
+  periodSeconds: 30
+  timeoutSeconds: 10
+  failureThreshold: 5
   
 readinessProbe:
   httpGet:
     path: /actuator/health
     port: 9091
-  initialDelaySeconds: 20
+  initialDelaySeconds: 45
   periodSeconds: 10
   timeoutSeconds: 5
+  failureThreshold: 3
 
-# Configuration de l'autoscaling
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-
-volumes: []
-volumeMounts: []
-
-nodeSelector: {}
-tolerations: []
-affinity: {}
-
-# Variables d'environnement pour l'application Spring Boot
+# Variables d'environnement pour Spring Boot - GARDER Eureka mais corriger la config
 env:
   - name: SERVER_PORT
     value: "9091"
-  - name: SPRING_CLOUD_CONFIG_ENABLED
-    value: "false"
-  - name: EUREKA_CLIENT_ENABLED
-    value: "false"
+  - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+    value: "http://discovery-server:8761/eureka"
+  - name: CONFIG_SERVER_URL
+    value: "http://config-server:8888"
+  - name: SPRING_PROFILES_ACTIVE
+    value: "docker"
   - name: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE
     value: "health,info,prometheus"
   - name: MANAGEMENT_ENDPOINT_PROMETHEUS_ENABLED
     value: "true"
   - name: MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED
     value: "true"
-  - name: SPRING_PROFILES_ACTIVE
-    value: "default"
+  - name: SPRING_BOOT_ADMIN_CLIENT_PREFER_IP
+    value: "false"
+  - name: EUREKA_INSTANCE_HOSTNAME
+    value: "admin-server"
+  - name: EUREKA_INSTANCE_PREFER_IP_ADDRESS
+    value: "false"
 
-# Configuration du ServiceMonitor pour Prometheus
 serviceMonitor:
   enabled: true
   path: /actuator/prometheus
