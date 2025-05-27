@@ -16,15 +16,15 @@ serviceAccount:
   name: ""
 
 podAnnotations: 
-  restart-trigger: "v5"
+  restart-trigger: "v6"
 podLabels: {}
 
 podSecurityContext: {}
 securityContext: {}
 service:
   type: ClusterIP
-  port: 8082
-  targetPort: 8082
+  port: 8083
+  targetPort: 8083
   labels:
     release: prometheus
 
@@ -50,15 +50,17 @@ livenessProbe:
   httpGet:
     path: /actuator/health
     port: http
-  initialDelaySeconds: 60
+  initialDelaySeconds: 90
   periodSeconds: 30
+  timeoutSeconds: 10
 
 readinessProbe:
   httpGet:
     path: /actuator/health
     port: http
-  initialDelaySeconds: 30
-  periodSeconds: 10
+  initialDelaySeconds: 60
+  periodSeconds: 15
+  timeoutSeconds: 5
 
 autoscaling:
   enabled: false
@@ -74,14 +76,18 @@ env:
     value: http://discovery-server:8761/eureka
   - name: EUREKA_INSTANCE_HOSTNAME
     value: vets-service
+  - name: EUREKA_INSTANCE_PREFER_IP_ADDRESS
+    value: "false"
   - name: CONFIG_SERVER_URL
     value: http://config-server:8888/config
   - name: SPRING_BOOT_ADMIN_CLIENT_URL
-    value: http://api-gateway:8080
-  - name: SPRING_BOOT_ADMIN_DISCOVERY_ENABLED
-    value: "true"
+    value: http://admin-server:9091
   - name: SPRING_BOOT_ADMIN_CLIENT_PREFER_IP
     value: "false"
+  - name: SERVER_PORT
+    value: "8083"
+  - name: SPRING_PROFILES_ACTIVE
+    value: "mysql"
   - name: MANAGEMENT_TRACING_ENABLED
     value: "false"
   - name: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT

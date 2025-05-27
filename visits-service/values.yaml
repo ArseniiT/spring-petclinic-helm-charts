@@ -45,25 +45,23 @@ livenessProbe:
   httpGet:
     path: /actuator/health
     port: http
-  initialDelaySeconds: 60
+  initialDelaySeconds: 90
   periodSeconds: 30
+  timeoutSeconds: 10
 
 readinessProbe:
   httpGet:
     path: /actuator/health
     port: http
-  initialDelaySeconds: 30
-  periodSeconds: 10
+  initialDelaySeconds: 60
+  periodSeconds: 15
+  timeoutSeconds: 5
 
 autoscaling:
   enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
 
 volumes: []
 volumeMounts: []
-
 nodeSelector: {}
 tolerations: []
 affinity: {}
@@ -82,11 +80,13 @@ env:
   - name: EUREKA_INSTANCE_HOSTNAME
     value: visits-service
   - name: SPRING_BOOT_ADMIN_CLIENT_URL
-    value: http://admin-server:9090
+    value: http://admin-server:9091
   - name: SPRING_BOOT_ADMIN_CLIENT_PREFER_IP
-    value: "true"
+    value: "false"
   - name: SERVER_PORT
     value: "8082"
+  - name: SPRING_PROFILES_ACTIVE
+    value: "mysql"
   - name: DB_HOST
     valueFrom:
       secretKeyRef:
