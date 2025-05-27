@@ -80,7 +80,7 @@ env:
   - name: EUREKA_INSTANCE_PREFER_IP_ADDRESS
     value: "false"
   - name: EUREKA_INSTANCE_HOSTNAME
-    value: customers-service
+    value: visits-service
   - name: SPRING_BOOT_ADMIN_CLIENT_URL
     value: http://admin-server:9090
   - name: SPRING_BOOT_ADMIN_CLIENT_PREFER_IP

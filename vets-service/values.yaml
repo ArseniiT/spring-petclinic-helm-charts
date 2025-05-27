@@ -72,6 +72,8 @@ affinity: {}
 env:
   - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
     value: http://discovery-server:8761/eureka
+  - name: EUREKA_INSTANCE_HOSTNAME
+    value: vets-service
   - name: CONFIG_SERVER_URL
     value: http://config-server:8888/config
   - name: SPRING_BOOT_ADMIN_CLIENT_URL
