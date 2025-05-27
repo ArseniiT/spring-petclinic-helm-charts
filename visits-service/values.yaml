@@ -72,6 +72,26 @@ env:
     value: http://admin-server:9090
   - name: SPRING_PROFILES_ACTIVE
     value: docker
+  - name: DB_HOST
+    valueFrom:
+      secretKeyRef:
+        name: dockerhub-credentials
+        key: db_host
+  - name: DB_USER
+    valueFrom:
+      secretKeyRef:
+        name: dockerhub-credentials
+        key: db_user
+  - name: DB_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: dockerhub-credentials
+        key: db_password
+  - name: DB_NAME
+    valueFrom:
+      secretKeyRef:
+        name: dockerhub-credentials
+        key: db_name
 
 serviceMonitor:
   enabled: true
