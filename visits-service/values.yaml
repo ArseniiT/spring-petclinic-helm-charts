@@ -7,7 +7,7 @@ image:
 
 imagePullSecrets: []
 nameOverride: ""
-fullnameOverride: "visits-service"
+fullnameOverride: ""
 
 serviceAccount:
   create: true
@@ -45,10 +45,15 @@ livenessProbe:
   httpGet:
     path: /actuator/health
     port: http
+  initialDelaySeconds: 60
+  periodSeconds: 30
+
 readinessProbe:
   httpGet:
     path: /actuator/health
     port: http
+  initialDelaySeconds: 30
+  periodSeconds: 10
 
 autoscaling:
   enabled: false
@@ -68,10 +73,20 @@ env:
     value: http://config-server:8888/config
   - name: EUREKA_SERVER_URL
     value: http://discovery-server:8761/eureka
+  - name: MANAGEMENT_TRACING_ENABLED
+    value: "false"
+  - name: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+    value: ""
+  - name: EUREKA_INSTANCE_PREFER_IP_ADDRESS
+    value: "false"
+  - name: EUREKA_INSTANCE_HOSTNAME
+    value: customers-service
   - name: SPRING_BOOT_ADMIN_CLIENT_URL
     value: http://admin-server:9090
-  - name: SPRING_PROFILES_ACTIVE
-    value: docker
+  - name: SPRING_BOOT_ADMIN_CLIENT_PREFER_IP
+    value: "true"
+  - name: SERVER_PORT
+    value: "8082"
   - name: DB_HOST
     valueFrom:
       secretKeyRef:
@@ -92,6 +107,11 @@ env:
       secretKeyRef:
         name: dockerhub-credentials
         key: db_name
+  - name: DB_PORT
+    valueFrom:
+      secretKeyRef:
+        name: dockerhub-credentials
+        key: db_port
 
 serviceMonitor:
   enabled: true
