@@ -3,7 +3,8 @@ replicaCount: 1
 image:
   repository: "<TO_BE_FILLED>"
   pullPolicy: IfNotPresent
-  tag: "latest"
+  tag: "20240528-1800"
+  # tag: "latest"
 
 imagePullSecrets: []
 nameOverride: ""
