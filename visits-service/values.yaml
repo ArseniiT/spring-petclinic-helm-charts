@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: "<TO_BE_FILLED>"
   # pullPolicy: IfNotPresent
-  pullPolicy: Alwqays
+  pullPolicy: Always
   tag: "latest"
 
 imagePullSecrets: []
