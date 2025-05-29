@@ -76,6 +76,8 @@ env:
     value: "false"
   - name: EUREKA_INSTANCE_HOSTNAME
     value: api-gateway
+  - name: EUREKA_SERVER_URL
+    value: http://discovery-server:8761/eureka
 
 serviceMonitor:
   enabled: true
