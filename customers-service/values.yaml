@@ -70,7 +70,6 @@ affinity: {}
 
 env:
   - name: CONFIG_SERVER_URL
-    # value: http://config-server:8888/config
     value: http://config-server:8888
   - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
     value: http://discovery-server:8761/eureka
@@ -90,10 +89,10 @@ env:
     value: "8081"
   - name: SPRING_PROFILES_ACTIVE
     value: "mysql"
-  - name: SPRING_DATASOURCE_URL
-    value: "jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true"
   - name: SPRING_JPA_HIBERNATE_DDL_AUTO
     value: "update"
+  
+  # Variables de base de données depuis le secret
   - name: DB_HOST
     valueFrom:
       secretKeyRef:
@@ -119,6 +118,18 @@ env:
       secretKeyRef:
         name: dockerhub-credentials
         key: db_port
+
+  # Variables Spring Boot pour forcer l'utilisation correcte
+  - name: SPRING_DATASOURCE_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: dockerhub-credentials
+        key: db_user
+  - name: SPRING_DATASOURCE_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: dockerhub-credentials
+        key: db_password
 
 serviceMonitor:
   enabled: true
