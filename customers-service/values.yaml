@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: "<TO_BE_FILLED>"
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   tag: "latest"
 
 imagePullSecrets: []
@@ -43,21 +43,24 @@ ingress:
 
 resources: {}
 
+# Configuration améliorée des health checks pour la base de données
 livenessProbe:
   httpGet:
     path: /actuator/health
     port: http
-  initialDelaySeconds: 90
+  initialDelaySeconds: 120
   periodSeconds: 30
   timeoutSeconds: 10
+  failureThreshold: 5
 
 readinessProbe:
   httpGet:
-    path: /actuator/health
+    path: /actuator/health/readiness
     port: http
-  initialDelaySeconds: 60
+  initialDelaySeconds: 90
   periodSeconds: 15
   timeoutSeconds: 5
+  failureThreshold: 3
 
 autoscaling:
   enabled: false
@@ -69,6 +72,7 @@ tolerations: []
 affinity: {}
 
 env:
+  # Configuration Spring Boot et Eureka
   - name: CONFIG_SERVER_URL
     value: http://config-server:8888
   - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
@@ -89,10 +93,22 @@ env:
     value: "8081"
   - name: SPRING_PROFILES_ACTIVE
     value: "mysql"
+  
+  # Configuration Hibernate et JPA
   - name: SPRING_JPA_HIBERNATE_DDL_AUTO
     value: "update"
+  - name: SPRING_JPA_SHOW_SQL
+    value: "false"
+  - name: SPRING_JPA_DATABASE_PLATFORM
+    value: "org.hibernate.dialect.MySQLDialect"
   
-  # Variables de base de données depuis le secret
+  # Désactivation du tracing
+  - name: MANAGEMENT_TRACING_ENABLED
+    value: "false"
+  - name: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+    value: ""
+    
+  # Variables de base de données depuis le secret AWS
   - name: DB_HOST
     valueFrom:
       secretKeyRef:
@@ -119,7 +135,9 @@ env:
         name: dockerhub-credentials
         key: db_port
 
-  # Variables Spring Boot pour forcer l'utilisation correcte
+  # Configuration Spring Boot pour forcer l'utilisation des variables d'environnement
+  - name: SPRING_DATASOURCE_URL
+    value: "jdbc:mysql://$(DB_HOST):$(DB_PORT)/$(DB_NAME)?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&connectTimeout=60000&socketTimeout=60000&autoReconnect=true"
   - name: SPRING_DATASOURCE_USERNAME
     valueFrom:
       secretKeyRef:
@@ -130,6 +148,22 @@ env:
       secretKeyRef:
         name: dockerhub-credentials
         key: db_password
+  - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+    value: "com.mysql.cj.jdbc.Driver"
+    
+  # Configuration Hikari pour améliorer la connexion DB
+  - name: SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT
+    value: "60000"
+  - name: SPRING_DATASOURCE_HIKARI_IDLE_TIMEOUT
+    value: "300000"
+  - name: SPRING_DATASOURCE_HIKARI_MAX_LIFETIME
+    value: "1200000"
+  - name: SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE
+    value: "5"
+  - name: SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE
+    value: "1"
+  - name: SPRING_DATASOURCE_HIKARI_INITIALIZATION_FAIL_TIMEOUT
+    value: "30000"
 
 serviceMonitor:
   enabled: true
