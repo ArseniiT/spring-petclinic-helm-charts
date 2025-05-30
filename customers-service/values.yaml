@@ -164,6 +164,8 @@ env:
     value: "1"
   - name: SPRING_DATASOURCE_HIKARI_INITIALIZATION_FAIL_TIMEOUT
     value: "30000"
+  - name: SPRING_DATASOURCE_HIKARI_AUTO_COMMIT
+    value: "false"
 
 serviceMonitor:
   enabled: true
