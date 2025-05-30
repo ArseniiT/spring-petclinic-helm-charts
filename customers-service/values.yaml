@@ -137,7 +137,7 @@ env:
 
   # Configuration Spring Boot pour forcer l'utilisation des variables d'environnement
   - name: SPRING_DATASOURCE_URL
-    value: "jdbc:mysql://$(DB_HOST):$(DB_PORT)/$(DB_NAME)?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&connectTimeout=60000&socketTimeout=60000&autoReconnect=true"
+    value: "jdbc:mysql://$(DB_HOST):$(DB_PORT)/$(DB_NAME)?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&connectTimeout=60000&socketTimeout=60000&autoReconnect=true&autoCommit=false"
   - name: SPRING_DATASOURCE_USERNAME
     valueFrom:
       secretKeyRef:
@@ -152,18 +152,18 @@ env:
     value: "com.mysql.cj.jdbc.Driver"
     
   # Configuration Hikari pour améliorer la connexion DB
-  - name: SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT
-    value: "60000"
-  - name: SPRING_DATASOURCE_HIKARI_IDLE_TIMEOUT
-    value: "300000"
-  - name: SPRING_DATASOURCE_HIKARI_MAX_LIFETIME
-    value: "1200000"
-  - name: SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE
-    value: "5"
-  - name: SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE
-    value: "1"
-  - name: SPRING_DATASOURCE_HIKARI_INITIALIZATION_FAIL_TIMEOUT
-    value: "30000"
+  # - name: SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT
+  #   value: "60000"
+  # - name: SPRING_DATASOURCE_HIKARI_IDLE_TIMEOUT
+  #   value: "300000"
+  # - name: SPRING_DATASOURCE_HIKARI_MAX_LIFETIME
+  #   value: "1200000"
+  # - name: SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE
+  #   value: "5"
+  # - name: SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE
+  #   value: "1"
+  # - name: SPRING_DATASOURCE_HIKARI_INITIALIZATION_FAIL_TIMEOUT
+  #   value: "30000"
 
 serviceMonitor:
   enabled: true
